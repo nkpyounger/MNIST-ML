@@ -41,6 +41,7 @@ def predict(self, point):
     while len(neighbors) < self.k:
         # Compute distances to every candidate.
         distances = [self.distance(x[0], point) for x in candidates]
+        print distances
         
         # Find the minimum distance neighbor.
         best_distance = min(distances)
@@ -115,7 +116,7 @@ def parse_images(data):
     images = pixels.reshape((n, cols, rows))
     return images
     
-from matplotlib.pyplot import *
+from matplotlib import pyplot
 
 #############################################
 
@@ -237,31 +238,31 @@ if __name__ == '__main__':
 #        
 #    #################
 #        
-#    # Convert our data set into an easy format to use.
-#    # This is a list of (x, y) pairs. x is an image, y is a label.
-#    dataset = []
-#    for i in xrange(len(train_images)):
-#        dataset.append((train_images[i, :, :], train_labels[i]))
-#        
-#    # Create a predictor for various values of k.
-#    ks = [1, 2, 3, 4, 5, 6]
-#    predictors = [MNISTPredictor(dataset, k) for k in ks]
-#        
-#    # Choose a subset of the test set. Otherwise this will never finish.
-#    test_set = test_images[0:100, :, :]
-#    all_predictions = [predict_test_set(predictor, test_set) for predictor in predictors]
-#    
-#    labels = asarray(test_labels[0:100])
-#    accuracies = [evaluate_prediction(pred, labels) for pred in all_predictions]
-#    
-#    # Draw the figure.
-#    fig = figure(1)
-#    plt.plot(ks, accuracies, 'ro', figure=fig)
-#    
-#    fig.suptitle("Nearest Neighbor Classifier Accuracies")
-#    fig.axes[0].set_xlabel("k (# of neighbors considered)")
-#    fig.axes[0].set_ylabel("accuracy (% correct)");
-#    fig.axes[0].axis([0, max(ks) + 1, 0, 1]);
+    # Convert our data set into an easy format to use.
+    # This is a list of (x, y) pairs. x is an image, y is a label.
+    dataset = []
+    for i in xrange(len(train_images)):
+        dataset.append((train_images[i, :, :], train_labels[i]))
+        
+    # Create a predictor for various values of k.
+    ks = [1, 2, 3, 4, 5, 6]
+    predictors = [MNISTPredictor(dataset, k) for k in ks]
+        
+    # Choose a subset of the test set. Otherwise this will never finish.
+    test_set = test_images[0:100, :, :]
+    all_predictions = [predict_test_set(predictor, test_set) for predictor in predictors]
+    
+    labels = asarray(test_labels[0:100])
+    accuracies = [evaluate_prediction(pred, labels) for pred in all_predictions]
+    
+    # Draw the figure.
+    fig = figure(1)
+    pyplot.plot(ks, accuracies, 'ro', figure=fig)
+    
+    fig.suptitle("Nearest Neighbor Classifier Accuracies")
+    fig.axes[0].set_xlabel("k (# of neighbors considered)")
+    fig.axes[0].set_ylabel("accuracy (% correct)");
+    fig.axes[0].axis([0, max(ks) + 1, 0, 1]);
 
 
 
