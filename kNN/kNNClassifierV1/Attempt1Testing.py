@@ -41,7 +41,7 @@ def predict(self, point):
     while len(neighbors) < self.k:
         # Compute distances to every candidate.
         distances = [self.distance(x[0], point) for x in candidates]
-        print distances
+#        print distances
         
         # Find the minimum distance neighbor.
         best_distance = min(distances)
@@ -243,6 +243,9 @@ if __name__ == '__main__':
     dataset = []
     for i in xrange(len(train_images)):
         dataset.append((train_images[i, :, :], train_labels[i]))
+    outd = open('A1TestingDataset.txt', 'w')
+    outd.write(' '.join(map(str, dataset)))
+    outd.close
         
     # Create a predictor for various values of k.
     ks = [1, 2, 3, 4, 5, 6]
@@ -250,13 +253,16 @@ if __name__ == '__main__':
         
     # Choose a subset of the test set. Otherwise this will never finish.
     test_set = test_images[0:100, :, :]
+    outt = open('A1TestingTestset.txt', 'w')
+    outt.write(' '.join(map(str, test_set)))
+    outt.close
     all_predictions = [predict_test_set(predictor, test_set) for predictor in predictors]
     
     labels = asarray(test_labels[0:100])
     accuracies = [evaluate_prediction(pred, labels) for pred in all_predictions]
     
     # Draw the figure.
-    fig = figure(1)
+    fig = pyplot.figure(1)
     pyplot.plot(ks, accuracies, 'ro', figure=fig)
     
     fig.suptitle("Nearest Neighbor Classifier Accuracies")
