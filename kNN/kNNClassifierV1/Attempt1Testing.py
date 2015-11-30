@@ -41,7 +41,7 @@ def predict(self, point):
     while len(neighbors) < self.k:
         # Compute distances to every candidate.
         distances = [self.distance(x[0], point) for x in candidates]
-        print distances
+        #print distances
         
         # Find the minimum distance neighbor.
         best_distance = min(distances)
